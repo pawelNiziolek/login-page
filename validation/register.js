@@ -28,7 +28,7 @@ module.exports = function validateRegisterInput(data) {
     errors.password = "Pole hasło jest wymagane"
   }
 
-  if (validator.isEmpty(data.password2)) {
+  if (Validator.isEmpty(data.password2)) {
     errors.password = "Potwierdź hasło"
   }
 

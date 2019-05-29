@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const keys = require("../../config/key");
+const keys = require("../../config/keys");
 
 //load input validation
 const validationRegisterInput = require("../../validation/register");
@@ -70,7 +70,7 @@ router.post('/login', (req, res) => {
 
   //find user by email
 
-  User.findById({
+  User.findOne({
     email
   }).then(user => {
     //check if user exists
