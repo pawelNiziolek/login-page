@@ -8,7 +8,7 @@ class Landing extends Component {
         <div className="row">
           <div className="col s12 center-align">
             <h4>
-              <b>Strona</b> logowania/autoryzacji dzięki{" "}
+              <b>Strona</b> logowania/autoryzacji dzięki
               <span style={{ fontfamily: "monospace" }}>MERN </span>stack
             </h4>
             <p className="flow-text grey-text text-darken-2">
