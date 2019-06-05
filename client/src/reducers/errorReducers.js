@@ -1,6 +1,6 @@
 import {
   GET_ERRORS
-} from "../actions/type";
+} from "../action/types";
 
 const initialState = {};
 
