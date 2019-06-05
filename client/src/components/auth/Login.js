@@ -24,14 +24,14 @@ class Login extends Component {
           <div className="col s8 offset-s2">
             <Link to="/" className="btn-flat waves-effect">
               <i className="material-icons left">keyboard_backspace</i>Wróć do
-              strony glównej
+              strony głównej
             </Link>
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
               <h4>
                 <b>Zaloguj się</b>
               </h4>
               <p className="grey-text text-darken-1">
-                Nie posiadasz konta? <Link to="/register">Zrejestruj się</Link>
+                Nie posiadasz konta? <Link to="/register">Zarejestruj się</Link>
               </p>
             </div>
             <form noValidate onSubmit={this.onSubmit}>

@@ -19,13 +19,12 @@ class Landing extends Component {
               <Link
                 to="/register"
                 style={{
-                  width: "140px",
                   borderRadius: "3px",
                   letterSpacing: "1.5px"
                 }}
                 className="btn btn-largewaves-effect waves-light hoverable blue accent-3"
               >
-                Rejestracja
+                Zarejestruj się
               </Link>
             </div>
             <div className="col s6">
