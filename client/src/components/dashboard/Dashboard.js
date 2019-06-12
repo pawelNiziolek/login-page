@@ -1,25 +1,25 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { logoutUser } from "../../action/authActions";
+import { logoutUser } from "../../actions/authActions";
 
 class Dashboard extends Component {
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
   };
+
   render() {
     const { user } = this.props.auth;
+
     return (
-      <div style={{ height: "75vh" }} className="container" valign-wrapper>
+      <div style={{ height: "75vh" }} className="container valign-wrapper">
         <div className="row">
-          <div className="col s12 center-align">
+          <div className="landing-copy col s12 center-align">
             <h4>
-              <b>Witaj na stronie </b>
-              {user.name.split(" ")[0]}
+              <b>Cześć</b> {user.name.split(" ")[0]}
               <p className="flow-text grey-text text-darken-1">
-                Zalogowałeś się na stronie która ciągle jest rozwijana...
-                cierpliwości
+                Jesteś na stronie, która dopiero powstaje...
               </p>
             </h4>
             <button
@@ -30,9 +30,9 @@ class Dashboard extends Component {
                 marginTop: "1rem"
               }}
               onClick={this.onLogoutClick}
-              className="btn-large waves-effect waves-light hoverble blue accent-3"
+              className="btn btn-large waves-effect waves-light hoverable blue accent-3"
             >
-              Wyloguj się
+              wyloguj się
             </button>
           </div>
         </div>

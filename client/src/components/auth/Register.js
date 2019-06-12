@@ -2,20 +2,23 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { registerUser } from "../../action/authActions";
+import { registerUser } from "../../actions/authActions";
 import classnames from "classnames";
 
 class Register extends Component {
-  state = {
-    name: "",
-    email: "",
-    password: "",
-    password2: "",
-    errors: {}
-  };
+  constructor() {
+    super();
+    this.state = {
+      name: "",
+      email: "",
+      password: "",
+      password2: "",
+      errors: {}
+    };
+  }
 
   componentDidMount() {
-    //if logged in and navigates to register page, should redirect them to dashboard
+    // If logged in and user navigates to Register page, should redirect them to dashboard
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
     }
@@ -30,9 +33,7 @@ class Register extends Component {
   }
 
   onChange = e => {
-    this.setState({
-      [e.target.id]: e.target.value
-    });
+    this.setState({ [e.target.id]: e.target.value });
   };
 
   onSubmit = e => {
@@ -44,35 +45,37 @@ class Register extends Component {
       password: this.state.password,
       password2: this.state.password2
     };
+
     this.props.registerUser(newUser, this.props.history);
   };
 
   render() {
-    const { errors, name, email, password, password2 } = this.state;
+    const { errors } = this.state;
+
     return (
       <div className="container">
         <div className="row">
           <div className="col s8 offset-s2">
             <Link to="/" className="btn-flat waves-effect">
-              <i className="material-icons left">keyboard_backspace</i>Wróć do
-              strony glównej
+              <i className="material-icons left">keyboard_backspace</i> Wróć na
+              stronę główną
             </Link>
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
               <h4>
-                <b>Zarejestruj się </b>poniżej
+                <b>Zarejestruj się</b> poniżej
               </h4>
               <p className="grey-text text-darken-1">
-                Posiadasz już konto? <Link to="/login">Zaloguj się</Link>
+                Masz już konto? <Link to="/login">Zaloguj się</Link>
               </p>
             </div>
             <form noValidate onSubmit={this.onSubmit}>
               <div className="input-field col s12">
                 <input
-                  type="text"
                   onChange={this.onChange}
-                  value={name}
-                  id="name"
+                  value={this.state.name}
                   error={errors.name}
+                  id="name"
+                  type="text"
                   className={classnames("", {
                     invalid: errors.name
                   })}
@@ -82,11 +85,11 @@ class Register extends Component {
               </div>
               <div className="input-field col s12">
                 <input
-                  type="email"
                   onChange={this.onChange}
-                  value={email}
-                  id="email"
+                  value={this.state.email}
                   error={errors.email}
+                  id="email"
+                  type="email"
                   className={classnames("", {
                     invalid: errors.email
                   })}
@@ -96,11 +99,11 @@ class Register extends Component {
               </div>
               <div className="input-field col s12">
                 <input
-                  type="password"
                   onChange={this.onChange}
-                  value={password}
-                  id="password"
+                  value={this.state.password}
                   error={errors.password}
+                  id="password"
+                  type="password"
                   className={classnames("", {
                     invalid: errors.password
                   })}
@@ -110,16 +113,16 @@ class Register extends Component {
               </div>
               <div className="input-field col s12">
                 <input
-                  type="password"
                   onChange={this.onChange}
-                  value={password2}
-                  id="password2"
+                  value={this.state.password2}
                   error={errors.password2}
+                  id="password2"
+                  type="password"
                   className={classnames("", {
                     invalid: errors.password2
                   })}
                 />
-                <label htmlFor="password2">Powtórz hasło</label>
+                <label htmlFor="password2">Potwierdź hasło</label>
                 <span className="red-text">{errors.password2}</span>
               </div>
               <div className="col s12" style={{ paddingLeft: "11.250px" }}>

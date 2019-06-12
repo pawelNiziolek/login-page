@@ -2,17 +2,13 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import {
-  GET_ERRORS,
-  SET_CURRENT_USER,
-  USER_LOADING
-} from "./types";
+import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 
-//Register User
+// Register User
 export const registerUser = (userData, history) => dispatch => {
   axios
     .post("/api/users/register", userData)
-    .then(res => history.push("/login")) //re-redirect to login on succesful register
+    .then(res => history.push("/login"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -21,22 +17,21 @@ export const registerUser = (userData, history) => dispatch => {
     );
 };
 
-//login - get user token
+// Login - get user token
 export const loginUser = userData => dispatch => {
   axios
     .post("/api/users/login", userData)
     .then(res => {
-      //save to localStorage
-      //set token to localStorage
-      const {
-        token
-      } = res.data;
+      // Save to localStorage
+
+      // Set token to localStorage
+      const { token } = res.data;
       localStorage.setItem("jwtToken", token);
-      //set token to Auth header
+      // Set token to Auth header
       setAuthToken(token);
-      //Decode token to get user data;
+      // Decode token to get user data
       const decoded = jwt_decode(token);
-      //set current user
+      // Set current user
       dispatch(setCurrentUser(decoded));
     })
     .catch(err =>
@@ -47,7 +42,7 @@ export const loginUser = userData => dispatch => {
     );
 };
 
-//set logged in user
+// Set logged in user
 export const setCurrentUser = decoded => {
   return {
     type: SET_CURRENT_USER,
@@ -55,19 +50,19 @@ export const setCurrentUser = decoded => {
   };
 };
 
-//User loading
+// User loading
 export const setUserLoading = () => {
   return {
     type: USER_LOADING
   };
 };
 
-//log user loading
+// Log user out
 export const logoutUser = () => dispatch => {
-  //remove token from locl storage
+  // Remove token from local storage
   localStorage.removeItem("jwtToken");
-  //remove auth header for future request
+  // Remove auth header for future requests
   setAuthToken(false);
-  //set current user to empty object {} which will set isAuthenticated to false
+  // Set current user to empty object {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
 };

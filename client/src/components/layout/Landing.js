@@ -4,15 +4,15 @@ import { Link } from "react-router-dom";
 class Landing extends Component {
   render() {
     return (
-      <div className="container valign-wrapper">
+      <div style={{ height: "75vh" }} className="container valign-wrapper">
         <div className="row">
           <div className="col s12 center-align">
             <h4>
-              <b>Strona</b> logowania/autoryzacji dzięki
-              <span style={{ fontfamily: "monospace" }}>MERN </span>stack
+              <b>Projekt</b> w budowie{" "}
+              <span style={{ fontFamily: "monospace" }}>MERN</span> login page
             </h4>
-            <p className="flow-text grey-text text-darken-2">
-              Login page stworzona z użyciem autentykacji dzięki passport i JWT
+            <p className="flow-text grey-text text-darken-1">
+              ... give me a time ...
             </p>
             <br />
             <div className="col s6">
@@ -22,7 +22,7 @@ class Landing extends Component {
                   borderRadius: "3px",
                   letterSpacing: "1.5px"
                 }}
-                className="btn btn-largewaves-effect waves-light hoverable blue accent-3"
+                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
               >
                 Zarejestruj się
               </Link>
@@ -35,7 +35,7 @@ class Landing extends Component {
                   borderRadius: "3px",
                   letterSpacing: "1.5px"
                 }}
-                className="btn btn-largewaves-effects white black-text"
+                className="btn btn-large  waves-light hoverable waves-effect white black-text"
               >
                 Zaloguj się
               </Link>

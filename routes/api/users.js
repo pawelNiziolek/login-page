@@ -3,34 +3,31 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
+const passport = require("passport");
 
-//load input validation
-const validationRegisterInput = require("../../validation/register");
-const validationLoginInput = require("../../validation/login");
+// Load input validation
+const validateRegisterInput = require("../../validation/register");
+const validateLoginInput = require("../../validation/login");
 
-//load User model
-const User = require("../../models/Users");
+// Load User model
+const User = require("../../models/User");
 
-router.post('/register', (req, res) => {
-  //form validation
+// @route POST api/users/register
+// @desc Register user
+// @access Public
+router.post("/register", (req, res) => {
+  // Form validation
 
-  const {
-    errors,
-    isValid
-  } = validationRegisterInput(req.body);
+  const { errors, isValid } = validateRegisterInput(req.body);
 
-  //Check validation
+  // Check validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
 
-  User.findOne({
-    email: req.body.email
-  }).then(user => {
+  User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      return res.status(400).json({
-        email: 'Email już istnieje'
-      });
+      return res.status(400).json({ email: "Email already exists" });
     } else {
       const newUser = new User({
         name: req.body.name,
@@ -38,7 +35,7 @@ router.post('/register', (req, res) => {
         password: req.body.password
       });
 
-      // hash password before saving in database
+      // Hash password before saving in database
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) throw err;
@@ -46,21 +43,22 @@ router.post('/register', (req, res) => {
           newUser
             .save()
             .then(user => res.json(user))
-            .catch(err => console.log(err))
+            .catch(err => console.log(err));
         });
       });
     }
   });
 });
 
-router.post('/login', (req, res) => {
-  //form validation
-  const {
-    errors,
-    isValid
-  } = validationLoginInput(req.body);
+// @route POST api/users/login
+// @desc Login user and return JWT token
+// @access Public
+router.post("/login", (req, res) => {
+  // Form validation
 
-  //check validation
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  // Check validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
@@ -68,43 +66,41 @@ router.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  //find user by email
-
-  User.findOne({
-    email
-  }).then(user => {
-    //check if user exists
+  // Find user by email
+  User.findOne({ email }).then(user => {
+    // Check if user exists
     if (!user) {
-      return res.status(404).json({
-        emailnotfound: "Nie znaleziono emaila"
-      });
+      return res.status(404).json({ emailnotfound: "Email not found" });
     }
 
-    // check password
+    // Check password
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
-        //user matched
-        //create JWT Payload
+        // User matched
+        // Create JWT Payload
         const payload = {
           id: user.id,
           name: user.name
         };
 
-        //sign token
-        jwt.sign(payload, keys.secretOrKey, {
-            expiresIn: 31556926 //one year in seconds
+        // Sign token
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          {
+            expiresIn: 31556926 // 1 year in seconds
           },
           (err, token) => {
             res.json({
-              succes: true,
-              token: 'Bearer ' + token
+              success: true,
+              token: "Bearer " + token
             });
           }
         );
       } else {
-        return res.status(400).json({
-          passwordincorrect: "Hasło jest nieprawidłowe"
-        });
+        return res
+          .status(400)
+          .json({ passwordincorrect: "Password incorrect" });
       }
     });
   });

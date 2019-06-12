@@ -5,15 +5,17 @@ class Navbar extends Component {
   render() {
     return (
       <div className="navbar-fixed">
-        <nav className="z-depth-6">
+        <nav className="z-depth-0">
           <div className="nav-wrapper white">
             <Link
               to="/"
-              style={{ fontFamily: "monospace" }}
+              style={{
+                fontFamily: "monospace"
+              }}
               className="col s5 brand-logo center black-text"
             >
               <i className="material-icons">code</i>
-              LOGIN PAGE
+              Login Page
             </Link>
           </div>
         </nav>
